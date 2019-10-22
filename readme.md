@@ -22,4 +22,3 @@ The **applications** directory contains the two applications used in this PoC.
 1. Go to your Azure web portal
 2. Go to the **Event Grid** service page
 3. Check the **kubernetes-poc** queue and message pushed to it.
-
