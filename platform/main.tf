@@ -50,6 +50,14 @@ resource "azurerm_virtual_network" "poc" {
   }
 }
 
+resource "azurerm_log_analytics_workspace" "poc" {
+  location            = var.location
+  name                = var.poc-name
+  resource_group_name = azurerm_resource_group.poc.name
+  sku                 = "PerGB2018"
+  retention_in_days   = "30"
+}
+
 resource "azurerm_kubernetes_cluster" "poc" {
   dns_prefix          = var.poc-name
   location            = var.location
@@ -63,6 +71,10 @@ resource "azurerm_kubernetes_cluster" "poc" {
     }
     kube_dashboard {
       enabled = true
+    }
+    oms_agent {
+      enabled                    = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.poc.id
     }
   }
 
