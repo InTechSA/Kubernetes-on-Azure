@@ -14,3 +14,14 @@ Then for each application
 2. edits "values.poc.yml"
     * Don't forget to set image repository according to the previous step.
 3. deploy with `helm install -f <APPLICATION_FOLDER>/values.poc.yml ./chart`
+
+
+## Command example
+
+```shell script
+az acr login --name $(terraform output --state=../platform/terraform.tfstate container_registry_name)
+REGISTRY_URL=$(terraform output --state=../platform/terraform.tfstate container_registry_url)
+cd backend
+docker build -t $REGISTRY_URL/backend:v1 .
+docker push $REGISTRY_URL/backend:v1
+```
