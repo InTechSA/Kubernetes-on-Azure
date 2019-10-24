@@ -8,13 +8,20 @@ provider "azuread" {
 
 data "azurerm_subscription" "primary" {}
 
+resource "random_pet" "random_name" {
+  keepers = {
+    poc_name = var.poc-name
+  }
+  separator = ""
+}
+
 resource "azuread_application" "poc" {
   name = var.poc-name
 }
 
 resource "azuread_application_password" "poc" {
   value                 = var.client_secret
-  end_date_relative     = "${2 * 365 * 24}h"
+  end_date              = "2021-01-01T00:00:00Z"
   application_object_id = azuread_application.poc.id
 }
 
@@ -95,6 +102,19 @@ resource "azurerm_kubernetes_cluster" "poc" {
       key_data = var.ssh_pub_key != "" ? var.ssh_pub_key : file("~/.ssh/id_rsa.pub")
     }
   }
+
+  tags = {
+    environment = "poc"
+    maintener   = var.author
+  }
+}
+
+resource "azurerm_container_registry" "poc" {
+  location            = var.location
+  name                = "PoCRegistry${random_pet.random_name.id}"
+  resource_group_name = azurerm_resource_group.poc.name
+  admin_enabled       = true
+  sku                 = "basic"
 
   tags = {
     environment = "poc"
