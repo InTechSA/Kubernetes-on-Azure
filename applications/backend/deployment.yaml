@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend-log-generator
-          image: pocregistryfaithfuloctopus.azurecr.io/backend:1.0.1
+          image: pocregistryfaithfuloctopus.azurecr.io/backend:1.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
