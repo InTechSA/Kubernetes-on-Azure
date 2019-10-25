@@ -9,7 +9,7 @@ provider "azuread" {
 data "azurerm_subscription" "primary" {}
 
 resource "random_pet" "random_name" {
-  keepers = {
+  keepers   = {
     poc_name = var.poc-name
   }
   separator = ""
@@ -35,6 +35,12 @@ resource "azurerm_role_assignment" "poc" {
   role_definition_name = "Contributor"
 }
 
+resource "azurerm_role_assignment" "acr" {
+  principal_id         = azuread_service_principal.poc.object_id
+  scope                = azurerm_container_registry.poc.id
+  role_definition_name = "AcrPull"
+}
+
 resource "azurerm_resource_group" "poc" {
   location = var.location
   name     = var.poc-name
@@ -53,7 +59,7 @@ resource "azurerm_virtual_network" "poc" {
 
   tags = {
     environment = "poc"
-    maintener   = var.author
+    maintainer   = var.author
   }
 }
 
@@ -86,9 +92,10 @@ resource "azurerm_kubernetes_cluster" "poc" {
   }
 
   agent_pool_profile {
-    name    = "pocprofile"
-    vm_size = var.vm_size
-    count   = var.vm_count
+    name            = "pocprofile"
+    vm_size         = var.vm_size
+    count           = var.vm_count
+    os_disk_size_gb = 30
   }
 
   service_principal {
@@ -105,7 +112,7 @@ resource "azurerm_kubernetes_cluster" "poc" {
 
   tags = {
     environment = "poc"
-    maintener   = var.author
+    maintainer   = var.author
   }
 }
 
@@ -113,11 +120,10 @@ resource "azurerm_container_registry" "poc" {
   location            = var.location
   name                = "PoCRegistry${random_pet.random_name.id}"
   resource_group_name = azurerm_resource_group.poc.name
-  admin_enabled       = true
   sku                 = "basic"
 
   tags = {
     environment = "poc"
-    maintener   = var.author
+    maintainer   = var.author
   }
 }
