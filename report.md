@@ -2,7 +2,12 @@
 
 This file contains report of expected output in the PoC.
 
-After deploying the platform itself with **terraform**
+In the `backend` folder, deploy the platform itself
+
+```shell
+terraform init
+terraform apply
+```
 
 ```text
 Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
@@ -138,3 +143,9 @@ In azure portal, on the kubernetes resource page, you see the log of the applica
 Log are parsed by azure since appliation output in a standard format (logstash json).
 
 ![logs](log_report.png)
+
+Finally clean the poc, in the `backend` folder
+
+```shell
+terraform destroy
+```
