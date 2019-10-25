@@ -25,5 +25,5 @@ cd backend
 docker build -t $REGISTRY_URL/backend:v1 .
 docker push $REGISTRY_URL/backend:v1
 # Edit values.poc.yml to set tag=v1
-helm install -f values.poc.yaml ../public-app
+helm install -f values.poc.yaml ../public-app --name="backend-poc"
 ```
