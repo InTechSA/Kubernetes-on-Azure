@@ -83,7 +83,7 @@ For more information on securing your installation see: https://docs.helm.sh/usi
 
 In the `applications/backend` folder, build and push app with
 
-```shell script
+```shell
 REGISTRY_URL=pocregistryfaithfuloctopus.azurecr.io
 docker build -t $REGISTRY_URL/backend:1.0.2 .
 docker push $REGISTRY_URL/backend:1.0.2
@@ -91,7 +91,7 @@ docker push $REGISTRY_URL/backend:1.0.2
 
 and then deploy app with app
 
-```shell script
+```shell
 helm install -f values.poc.yaml ../public-app --name=backend-api
 ```
 
