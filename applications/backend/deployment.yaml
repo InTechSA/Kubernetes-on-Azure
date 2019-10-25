@@ -41,3 +41,14 @@ spec:
   selector:
     matchLabels:
       app: backend-log-generator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-log-generator
+spec:
+  selector:
+    app: backend-log-generator
+  ports:
+    - port: 3000
+  type: LoadBalancer

@@ -2,13 +2,13 @@
 
 This repository contains all resource and code relative to the
 Kubernetes on Azure Proof of Concept.
-The goal is to create a complete plateform with infrastructure as code,
-and then deploy an application using azure API.
+The goal is to create a complete platform with infrastructure as code,
+and then deploy an application using standard tools.
 
 ## Description
 
 The **platform** directory contains all infrastructure as code relative files.
-The **applications** directory contains the two applications used in this PoC.
+The **applications** directory contains the application used in this PoC.
 
 ## How to
 
@@ -20,5 +20,5 @@ The **applications** directory contains the two applications used in this PoC.
 ### Use
 
 1. Go to your Azure web portal
-2. Go to the **Event Grid** service page
-3. Check the **kubernetes-poc** queue and message pushed to it.
+2. Check the load-balanced service exposed on the cluster
+3. Check logs into Azure Monitor

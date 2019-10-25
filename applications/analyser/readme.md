@@ -1,1 +1,0 @@
-# Log analysis application

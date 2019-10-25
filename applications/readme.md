@@ -8,12 +8,12 @@ It also contains a special **chart** folder containing helm chart to deploy the 
 1. Connect your kubectl to the Azure [kubernetes](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster).
 2. Install and configure [Helm](https://docs.microsoft.com/en-us/azure/aks/kubernetes-helm) on your cluster.
 
-Then for each application
+Then,
 
-1. Build and Push image to [container registry](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr).
-2. edits "values.poc.yml"
+1. Build and Push `backend` image to [container registry](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr).
+2. edits "values.poc.yml" in `backend`
     * Don't forget to set image repository according to the previous step.
-3. deploy with `helm install -f <APPLICATION_FOLDER>/values.poc.yml ./chart`
+3. deploy with `helm install -f backend/values.poc.yml ./chart`
 
 
 ## Command example
@@ -24,4 +24,5 @@ REGISTRY_URL=$(terraform output --state=../platform/terraform.tfstate container_
 cd backend
 docker build -t $REGISTRY_URL/backend:v1 .
 docker push $REGISTRY_URL/backend:v1
+# Edit values.poc.yml to set tag=v1
 ```
