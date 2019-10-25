@@ -12,4 +12,8 @@ app.get('/', (req, res) => {
   res.send(logs);
 });
 
+app.get('/health', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.listen(port, () => logger.info(`Example app listening on port ${port}!`));

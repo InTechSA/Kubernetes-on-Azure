@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-log-generator-deployment
+  labels:
+    app: backend-log-generator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: backend-log-generator
+      labels:
+        app: backend-log-generator
+    spec:
+      containers:
+        - name: backend-log-generator
+          image: pocregistryfaithfuloctopus.azurecr.io/backend:1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 50m
+          readinessProbe:
+            httpGet:
+              port: 3000
+              path: "/health"
+            initialDelaySeconds: 3
+            periodSeconds: 1
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              port: 3000
+              path: "/health"
+            periodSeconds: 10
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: backend-log-generator
