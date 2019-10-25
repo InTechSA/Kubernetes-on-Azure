@@ -27,20 +27,20 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - name: expose
+              containerPort: {{ .Values.container.expose.port }}
+              protocol: {{ .Values.container.expose.protocol }}
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: {{.Values.container.probe.path}}
+              port: expose
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: {{.Values.container.probe.path}}
+              port: expose
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

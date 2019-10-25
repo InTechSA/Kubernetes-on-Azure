@@ -5,9 +5,17 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: pocregistryfaithfuloctopus.azurecr.io
+  name: nginx
   tag: stable
   pullPolicy: IfNotPresent
+
+container:
+  expose:
+    port: 80
+    protocol: TCP
+  probe:
+    path: /
 
 imagePullSecrets: []
 nameOverride: ""
@@ -15,7 +23,7 @@ fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+  create: false
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name:
@@ -32,7 +40,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
 
 ingress:
